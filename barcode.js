@@ -56,9 +56,7 @@ var barcode = function() {
 		canvas: '',
 		canvasg: ''
 	}
-	//const mediaStream = new MediaStream();
-	//const video = document.getElementById('video-player');
-	//video.srcObject = mediaStream;
+
 	function init() {
 
 		window.URL = window.URL || window.webkitURL;
@@ -71,7 +69,15 @@ var barcode = function() {
 		elements.ctxg = elements.canvasg.getContext('2d');
 
 		if (navigator.getUserMedia) {
-			navigator.getUserMedia({audio: false, video: true}, function(stream) {
+			let configuration = {
+					audio: false,
+					video: {
+						facingMode: { 
+							exact: 'environment'
+						}
+					}
+				};
+			navigator.getUserMedia(configuration, function(stream) {
 				//elements.video.src = window.URL.createObjectURL(stream);
 				elements.video.srcObject = stream;
 			}, function(error) {
